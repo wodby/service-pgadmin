@@ -1,0 +1,99 @@
+name: pgadmin
+icon: pgadmin
+type: service
+title: pgAdmin
+scalable: false
+
+options:
+- version: '9'
+  tag: '9.17'
+  default: true
+
+endpoints:
+- name: pgadmin
+  ports:
+  - name: http
+    number: 8080
+    protocol: http
+
+labels:
+- pgadmin
+- database-admin
+- postgres-admin
+
+tokens:
+- name: admin_password
+  generate:
+    regex: '[0-9a-z]{32}'
+
+links:
+- name: db
+  title: PostgreSQL database
+  required: true
+  helm:
+  - name: server.enabled
+    value: true
+  - name: server.name
+    value: PostgreSQL
+  - name: server.host
+    value: '{{link.database.host}}'
+  - name: server.port
+    value: '{{link.database.port}}'
+  - name: server.username
+    value: '{{link.database.user.name}}'
+  - name: server.maintenanceDatabase
+    value: '{{link.database.db.name}}'
+  selectors:
+  - type: db
+    labels:
+    - postgres
+
+volumes:
+- name: data
+  title: pgAdmin configuration
+  size: 1
+  optional: true
+  helm:
+    labels: persistence.labels
+    values:
+    - name: persistence.enabled
+      value: true
+    - name: persistence.size
+      value: '{{volumes.data.size}}Gi'
+    - name: persistence.storageClass
+      value: '{{volumes.data.storageClassName}}'
+
+helm:
+  name: wodby
+  source: oci://registry-1.docker.io/wodby/pgadmin
+  chart: oci://registry-1.docker.io/wodby/pgadmin
+  version: 0.1.0
+  valueMappings:
+    replicas: replicaCount
+    fullnameOverride: fullnameOverride
+    serviceAccountName: serviceAccount.name
+    serviceAccountCreate: serviceAccount.create
+  values:
+  - name: admin.email
+    value: pgadmin@wodby.com
+  - name: admin.password
+    value: '{{tokens.admin_password}}'
+
+workloads:
+- name: main
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: '{{helm.release}}'
+  kind: deployment
+  primary: true
+  helm:
+    labels: podLabels
+    annotations: podAnnotations
+    volumes: extraVolumes
+  containers:
+  - name: pgadmin
+    image: dpage/pgadmin4
+    helm:
+      resources: resources
+      env: envVars
+      mounts: extraVolumeMounts
