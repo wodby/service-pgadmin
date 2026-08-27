@@ -77,7 +77,7 @@ helm:
   - name: admin.email
     value: pgadmin@wodby.com
   - name: admin.password
-    value: '{{tokens.admin_password}}'
+    value: '{{admin_password}}'
 
 workloads:
 - name: main
