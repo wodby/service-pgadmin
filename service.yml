@@ -30,6 +30,10 @@ links:
 - name: db
   title: PostgreSQL database
   required: true
+  env:
+  - name: PGADMIN_DB_PASSWORD
+    value: '{{link.database.user.password}}'
+    secret: true
   helm:
   - name: server.enabled
     value: true
@@ -43,6 +47,10 @@ links:
     value: '{{link.database.user.name}}'
   - name: server.maintenanceDatabase
     value: '{{link.database.db.name}}'
+  - name: server.passwordSecret
+    value: '{{service.secrets.env}}'
+  - name: server.passwordKey
+    value: PGADMIN_DB_PASSWORD
   selectors:
   - type: db
     labels:
@@ -73,7 +81,7 @@ helm:
   name: wodby
   source: oci://registry-1.docker.io/wodby/pgadmin
   chart: oci://registry-1.docker.io/wodby/pgadmin
-  version: 0.2.0
+  version: 0.3.0
   valueMappings:
     replicas: replicaCount
     fullnameOverride: fullnameOverride
@@ -81,7 +89,7 @@ helm:
     serviceAccountCreate: serviceAccount.create
   values:
   - name: admin.email
-    value: pgadmin@wodby.com
+    value: user@domain.com
   - name: admin.password
     value: '{{admin_password}}'
 
