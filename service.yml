@@ -81,7 +81,7 @@ helm:
     serviceAccountCreate: serviceAccount.create
   values:
   - name: admin.email
-    value: pgadmin@wodby.com
+    value: user@domain.com
   - name: admin.password
     value: '{{admin_password}}'
 
