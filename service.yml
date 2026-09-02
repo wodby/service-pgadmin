@@ -81,7 +81,7 @@ helm:
   name: wodby
   source: oci://registry-1.docker.io/wodby/pgadmin
   chart: oci://registry-1.docker.io/wodby/pgadmin
-  version: 0.3.4
+  version: 0.3.5
   valueMappings:
     replicas: replicaCount
     fullnameOverride: fullnameOverride

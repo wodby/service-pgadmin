@@ -2,7 +2,7 @@
 
 This repository defines the Wodby pgAdmin service for linked PostgreSQL databases.
 
-Wodby generates a stable pgAdmin administrator password and registers the linked PostgreSQL host, port, database, and username. The linked PostgreSQL password is supplied through a Kubernetes Secret-backed `.pgpass` file and is never stored in the generated server definition.
+Wodby generates a stable pgAdmin administrator password and registers the linked PostgreSQL host, port, database, and username. The linked PostgreSQL password is supplied through a Kubernetes Secret-backed `.pgpass` file, which the generated server definition references by relative path, and is never stored directly in the server definition.
 
 For persistent pgAdmin configuration volumes created with an older administrator email, the chart loads the linked PostgreSQL server for the sole existing active internal administrator and refreshes that account's `.pgpass` file on every startup. It does not rename or otherwise modify the pgAdmin account.
 
