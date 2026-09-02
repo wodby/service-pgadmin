@@ -26,6 +26,14 @@ tokens:
   generate:
     regex: '[0-9a-z]{32}'
 
+settings:
+- name: admin_email
+  title: Administrator email
+  description: Email address used to sign in to pgAdmin
+  default: user@domain.com
+  required: true
+  var: PGADMIN_DEFAULT_EMAIL
+
 links:
 - name: db
   title: PostgreSQL database
@@ -81,7 +89,7 @@ helm:
   name: wodby
   source: oci://registry-1.docker.io/wodby/pgadmin
   chart: oci://registry-1.docker.io/wodby/pgadmin
-  version: 0.3.2
+  version: 0.4.0
   valueMappings:
     replicas: replicaCount
     fullnameOverride: fullnameOverride
@@ -89,7 +97,7 @@ helm:
     serviceAccountCreate: serviceAccount.create
   values:
   - name: admin.email
-    value: user@domain.com
+    value: ''
   - name: admin.password
     value: '{{admin_password}}'
 
