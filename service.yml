@@ -6,7 +6,7 @@ scalable: false
 
 options:
 - version: '9'
-  tag: '9.17'
+  tag: '9.18.0'
   default: true
 
 endpoints:
