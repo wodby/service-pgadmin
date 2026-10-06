@@ -2,6 +2,7 @@ name: pgadmin
 icon: pgadmin
 type: service
 title: pgAdmin
+guidance: GUIDANCE.md
 scalable: false
 
 options:
