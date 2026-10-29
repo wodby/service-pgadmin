@@ -1,6 +1,7 @@
 name: pgadmin
 icon: pgadmin
 type: service
+basicAuth: true
 title: pgAdmin
 guidance: GUIDANCE.md
 scalable: false
