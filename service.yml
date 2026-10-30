@@ -8,7 +8,7 @@ scalable: false
 
 options:
 - version: '9'
-  tag: '9.18.0'
+  tag: '9.19.0'
   default: true
 
 endpoints:
