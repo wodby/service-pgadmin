@@ -109,6 +109,10 @@ workloads:
   containers:
   - name: pgadmin
     image: dpage/pgadmin4
+    resources:
+      request:
+        cpu: 10
+        memory: 384
     helm:
       resources: resources
       env: envVars
