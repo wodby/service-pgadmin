@@ -112,7 +112,7 @@ workloads:
     resources:
       request:
         cpu: 10
-        memory: 384
+        memory: 256
     helm:
       resources: resources
       env: envVars
